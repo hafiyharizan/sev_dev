@@ -31,7 +31,7 @@ const Banner = () => {
                 {/* COLUMN-2 */}
 
                 <div className='lg:-m-24 lg:pt-20 hidden lg:block'>
-                    <Image src="/images/surau2.jpg" alt="hero-image" width={800} height={642} />
+                    <Image className='rounded-3xl' src="/images/surau2.jpg" alt="hero-image" width={800} height={642} />
                 </div>
 
             </div>

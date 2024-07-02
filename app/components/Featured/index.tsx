@@ -8,24 +8,33 @@ import Image from "next/image";
 interface DataType {
     heading: string;
     imgSrc: string;
+    videoSrc: string;
+    link: string;
 }
-
 const postData: DataType[] = [
     {
-        heading: 'Hari Raya Eidul-Adha.',
-        imgSrc: '/images/featured/feat1.jpg',
+        heading: 'Program Qurban SEV 2024',
+        imgSrc: '',
+        videoSrc: 'https://www.youtube.com/embed/dPnTTTwGgJs?si=Jbr62JCSvlGg_hpI',
+        link: '',
     },
     {
-        heading: 'Perkongsian Hadis hujung minggu.',
-        imgSrc: '/images/featured/feat2.jpg',
+        heading: 'Hari Raya Eidul-Adha.',
+        imgSrc: '/images/featured/feat3.jpg',
+        videoSrc: '',
+        link: 'https://drive.google.com/drive/folders/1nJDqx4MWPdhjUOwjTpA40HcRA2XMRjOY?usp=drive_link',
     },
     {
         heading: 'Tadarrus Mingguan.',
         imgSrc: '/images/featured/feat1.jpg',
+        videoSrc: '',
+        link: '/',
     },
     {
         heading: 'Gotong Royong Mingguan.',
         imgSrc: '/images/featured/feat2.jpg',
+        videoSrc: '',
+        link: '/',
     }
 ]
 
@@ -64,14 +73,14 @@ export default class MultipleItems extends Component {
             // centerMode: true,
             slidesToScroll: 1,
             arrows: true,
-            autoplay: false,
+            autoplay: true,
             speed: 500,
             nextArrow: <SampleNextArrow className={undefined} style={undefined} onClick={undefined} />,
             prevArrow: <SamplePrevArrow className={undefined} style={undefined} onClick={undefined} />,
             cssEase: "linear",
             responsive: [
                 {
-                    breakpoint: 420,
+                    breakpoint: 600,
                     settings: {
                         slidesToShow: 1,
                         slidesToScroll: 1,
@@ -94,16 +103,36 @@ export default class MultipleItems extends Component {
                     </div>
 
                     <Slider {...settings}>
-                        {postData.map((items, i) => (
-                            <div key={i}>
-
-                                <div className='bg-transparent m-3 pb-12 my-10 rounded-3xl'>
-                                    <Image src={items.imgSrc} alt="gaby" width={636} height={620} className="rounded-2xl" />
-                                    <div className="w-345">
-                                        <h4 className='sm:text-4xl font-bold sm:pt-6 text-center sm:text-start mt-10 text-white'>{items.heading}</h4>
+                        {postData.map((item, index) => (
+                            <div key={index}>
+                                {index === 0 ? (
+                                    <div className='bg-transparent m-3 pb-12 my-10 rounded-3xl'>
+                                        <iframe className='rounded-2xl'
+                                            height="384"
+                                            style={{
+                                                width: '100%', // Ensures iframe takes full width of container
+                                                maxWidth: '100%', // Ensures iframe doesn't exceed container width
+                                            }}
+                                            src={item.videoSrc}
+                                            title="YouTube video player"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                            referrerPolicy="strict-origin-when-cross-origin"
+                                            allowFullScreen
+                                        ></iframe>
+                                        <div className="w-345">
+                                            <h4 className='sm:text-4xl font-bold sm:pt-6 text-center sm:text-start mt-10 text-white'>{item.heading}</h4>
+                                        </div>
                                     </div>
-                                </div>
-
+                                ) : (
+                                    <div className='bg-transparent m-3 pb-12 my-10 rounded-3xl'>
+                                        <a href={item.link} target="_blank" rel="noopener noreferrer">
+                                            <img src={item.imgSrc} alt={item.heading} className="rounded-2xl w-full max-h-96" />
+                                            <div className="w-345">
+                                                <h4 className='sm:text-4xl font-bold sm:pt-6 text-center sm:text-start mt-10 text-white'>{item.heading}</h4>
+                                            </div>
+                                        </a>
+                                    </div>
+                                )}
                             </div>
                         ))}
                     </Slider>

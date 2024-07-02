@@ -23,8 +23,8 @@ const navigation: NavigationItem[] = [
         href: '#pautan-section', 
         current: false,
         children: [
-            { name: 'Link 1', href: '/link1', current: false },
-            { name: 'Link 2', href: '/link2', current: false },
+            { name: 'Jawatankuasa PROTEM', href: '/ajk', current: false },
+            { name: 'Pendaftaran Ahli Tabung Khairat', href: 'https://form.jotform.com/elminavalley/TabungKhairat', current: false },
             // Add more dropdown items as needed
         ]
     },
@@ -47,7 +47,7 @@ const Navbar = () => {
                             {/* LOGO */}
                             <div className="flex flex-shrink-0 items-center border-right">
                                 <Link href="/" className='text-2xl sm:text-4xl font-semibold text-black'>
-                                    <img className="mr-2" width="165px" src="/images/logo_sev2.png" alt="SEV Logo" />
+                                    <img className="" width="165px" src="/images/sevlogo.png" alt="SEV Logo" />
                                 </Link>
                             </div>
 
@@ -73,6 +73,7 @@ const Navbar = () => {
                                                                 key={child.name}
                                                                 href={child.href}
                                                                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                                target='_blank'
                                                             >
                                                                 {child.name}
                                                             </Link>

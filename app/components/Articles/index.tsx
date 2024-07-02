@@ -7,62 +7,54 @@ import Image from "next/image";
 // CAROUSEL DATA
 
 interface DataType {
-    time: string;
     heading: string;
     heading2: string;
     date: string;
     imgSrc: string;
     name: string;
+    linkbuletin: string;
 }
 
 const postData: DataType[] = [
     {
-        time: "Lihat Buletin",
-        heading: 'Program Qurban SEV 24',
-        heading2: '2 ekor Kambing & 5 Ekor Lembu!',
-        name: "Published on",
-        date: 'August 19, 2021',
-        imgSrc: '/images/articles/article.png',
-    },
-    {
-        time: "Lihat Buletin",
         heading: 'Tabung Khairat Kematian',
         heading2: 'Pendaftaran Keahlian Kini Dibuka',
         name: "Published on",
-        date: 'August 19, 2021',
+        date: 'Julai 2, 2024',
         imgSrc: '/images/articles/article2.png',
+        linkbuletin: 'https://form.jotform.com/elminavalley/TabungKhairat',
     },
     {
-        time: "Lihat Buletin",
-        heading: 'Buletin Sample Title',
-        heading2: 'Buletin Sample Description',
+        heading: 'Tabung Derma Surau',
+        heading2: 'Ayuh amal jariah dengan menderma',
         name: "Published on ",
-        date: 'August 19, 2021',
-        imgSrc: '/images/articles/article3.png',
+        date: 'Julai 2, 2024',
+        imgSrc: '/images/articles/qr_square.png',
+        linkbuletin: '/',
     },
     {
-        time: "Lihat Buletin",
-        heading: 'Buletin Sample Title',
-        heading2: 'Buletin Sample Description',
+        heading: 'Hari Raya Eidul-Adha',
+        heading2: 'Solat Sunat Eidul-Adha 2024 di SEV',
         name: "Published on ",
-        date: 'August 19, 2021',
-        imgSrc: '/images/articles/article.png',
+        date: 'Jun 17, 2024',
+        imgSrc: '/images/articles/article4.jpg',
+        linkbuletin: '/',
     },
     {
-        time: "Lihat Buletin",
-        heading: 'Buletin Sample Title',
-        heading2: 'Buletin Sample Description',
-        name: "Published on ",
-        date: 'August 19, 2021',
-        imgSrc: '/images/articles/article2.png',
+        heading: 'Program Qurban SEV 24',
+        heading2: '2 ekor Kambing & 5 Ekor Lembu!',
+        name: "Published on",
+        date: 'Jun 17, 2024',
+        imgSrc: '/images/articles/article.jpg',
+        linkbuletin: '/',
     },
     {
-        time: "Lihat Buletin",
-        heading: 'Buletin Sample Title',
-        heading2: 'Buletin Sample Description',
+        heading: 'Perkongsian Hadith',
+        heading2: 'Jom 5 minit 1 Hadith',
         name: "Published on ",
-        date: 'August 19, 2021',
-        imgSrc: '/images/articles/article3.png',
+        date: 'Julai 2, 2024',
+        imgSrc: '/images/articles/feat3.jpeg',
+        linkbuletin: '/',
     },
 ]
 
@@ -78,8 +70,8 @@ export default class MultipleItems extends Component {
             slidesToShow: 3,
             // centerMode: true,
             slidesToScroll: 2,
-            arrows: false,
-            autoplay: false,
+            arrows: true,
+            autoplay: true,
             speed: 500,
             cssEase: "linear",
             responsive: [
@@ -120,10 +112,10 @@ export default class MultipleItems extends Component {
                             <div key={i} >
 
                                 <div className='bg-white m-3 px-3 pt-3 pb-12 my-10 shadow-lg rounded-3xl relative'>
-                                    <Image src={items.imgSrc} alt="gaby" width={389} height={262} className="inline-block m-auto" />
+                                    <Image src={items.imgSrc} alt="gaby" width={389} height={262} className="inline-block m-auto rounded-3xl max-h-60" />
 
-                                    <Link href="/">
-                                        <h3 className="absolute bg-blue text-white hover:bg-black hover:shadow-xl py-3 px-6 rounded-full article-img">{items.time}</h3>
+                                    <Link href={items.linkbuletin} target="_blank">
+                                        <h3 className="absolute bg-blue text-white hover:bg-black hover:shadow-xl py-3 px-6 rounded-full article-img">Lihat Buletin</h3>
                                     </Link>
                                     <h4 className='text-2xl font-bold pt-6 text-black'>{items.heading}</h4>
                                     <h4 className='text-xl font-semibold pt-1 text-black'>{items.heading2}</h4>

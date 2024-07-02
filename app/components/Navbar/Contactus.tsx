@@ -50,7 +50,7 @@ const Contactusform = () => {
                 </div> */}
                 <div className='hidden lg:block'>
                     <button type="button" className='justify-end text-ml font-semibold bg-transparent py-2 px-6 lg:px-6 navbutton rounded-full hover:bg-navyblue hover:text-white' onClick={openModal}>
-                        Contact Us
+                        Hubungi Kami
                     </button>
                 </div>
             </div>
