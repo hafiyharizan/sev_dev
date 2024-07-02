@@ -5,8 +5,8 @@ import { ChevronRightIcon } from '@heroicons/react/20/solid'
 interface datatype {
     heading: string;
     imgSrc: string;
-    imgwidth: string;
-    imgheight: string;
+    imgwidth: number;
+    imgheight: number;
     paragraph: string;
     link: string;
 }
@@ -15,24 +15,24 @@ const Aboutdata: datatype[] = [
     {
         heading: "Kekosongan Jawatan SIAK di SEV.",
         imgSrc: "/images/aboutus/siak.jpg",
-        imgwidth: "130",
-        imgheight: "130",
+        imgwidth: 130,
+        imgheight: 130,
         paragraph: 'Surau Elmina Valley kini membuka peluang untuk mengisi kekosongan jawatan sebagai SIAK (Sistem Informasi & Aktiviti Keagamaan).\n',
         link: '/'
     },
     {
         heading: "Tabung Khairat.",
         imgSrc: "/images/articles/article2.png",
-        imgwidth: "220",
-        imgheight: "200",
+        imgwidth: 220,
+        imgheight: 200,
         paragraph: 'Dibuka kepada semua penduduk Muslimin & Muslimat yang telah menetap di kawasan Elmina sekurang-kurangnya TIGA (3) bulan dari tarikh berdaftar sebagai ahli.\n',
         link: 'https://form.jotform.com/elminavalley/TabungKhairat'
     },
     {
         heading: "Kuliah Maghrib.",
         imgSrc: "/images/aboutus/harum_di_langit_cover.png",
-        imgwidth: "150",
-        imgheight: "150",
+        imgwidth: 150,
+        imgheight: 150,
         paragraph: '(Pengajian Kitab Bulanan Sirah Sahabat Nabi): "Kisah Para Sahabat"\n' +
         'Tarikh: Bermula 11 Julai 2024 (setiap khamis minggu kedua)\n' +
         'Penceramah : Ustaz Nazmi Karim',
