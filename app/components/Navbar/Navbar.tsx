@@ -26,7 +26,7 @@ const navigation: NavigationItem[] = [
         children: [
             { name: 'Jawatankuasa PROTEM', href: '/ajk', current: false },
             { name: 'Pendaftaran Ahli Tabung Khairat', href: '/khairat', current: false },
-            { name: 'Pendaftaran Ahli Tabung Khairat', href: '/siak', current: false },
+            { name: 'Kekosongan Jawatan SIAK', href: '/siak', current: false },
             // Add more dropdown items as needed
         ]
     },
