@@ -2,7 +2,8 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, useState } from 'react';
 import Link from 'next/link';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faWhatsapp, faTelegram } from '@fortawesome/free-brands-svg-icons';
 
 const Contactusform = () => {
     let [isOpen, setIsOpen] = useState(false)
@@ -88,10 +89,10 @@ const Contactusform = () => {
                                             Surau Elmina Valley
                                             </Link>
                                         </div>
-                                        <p className="mb-8 lg:mb-16 mt-8 font-light text-center text-gray-500 dark:text-gray-400 sm:text-xl">Contact us now? Want to send us a feedback?</p>
+                                        <p className="mb-4 lg:mb-8 mt-8 font-light text-center text-gray-500 dark:text-gray-400 sm:text-xl">Anda ingin dapatkan info lebih lanjut? Hubungi kami</p>
                                         <form action="#" className="space-y-8" onSubmit={handleSubmit}>
                                             <div>
-                                                <label htmlFor="text" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Your Name</label>
+                                                <label htmlFor="text" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Nama</label>
                                                 <input
                                                     id="text"
 
@@ -107,7 +108,7 @@ const Contactusform = () => {
                                                 />
                                             </div>
                                             <div>
-                                                <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Your email</label>
+                                                <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">E-mail</label>
                                                 <input
                                                     id="email"
                                                     name="input2"
@@ -122,7 +123,7 @@ const Contactusform = () => {
                                                 />
                                             </div>
                                             <div className="sm:col-span-2">
-                                                <label htmlFor="message" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Your message</label>
+                                                <label htmlFor="message" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Mesej Anda</label>
                                                 <textarea
                                                     id="message"
                                                     name="input3"
@@ -135,7 +136,20 @@ const Contactusform = () => {
                                                 disabled={isDisabled}
                                                 className="py-3 px-5 text-sm disabled:opacity-50 font-medium w-full text-center text-white rounded-lg bg-blue focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Send message</button>
 
+                                            <p className="text-center">
+                                                Atau klik icon di-bawah untuk hubungi kami terus di Whatsapp/Telegram:
+                                            </p>
+                                            {/* WHATSAPP AND TELEGRAM BUTTONS */}
+                                            <div className="flex text-center items-center space-x-4 justify-center">
+                                                <a href="https://wa.me/+60192768406" target="_blank" rel="noopener noreferrer">
+                                                    <FontAwesomeIcon icon={faWhatsapp} size="lg" style={{ fontSize: '34px' }}/>
+                                                </a>
+                                                <a href="https://t.me/+60192768406" target="_blank" rel="noopener noreferrer">
+                                                    <FontAwesomeIcon icon={faTelegram} size="lg" style={{ fontSize: '34px' }}/>
+                                                </a>
+                                            </div>
                                         </form>
+
 
                                     </div>
 
