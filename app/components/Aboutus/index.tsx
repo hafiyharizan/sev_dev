@@ -18,7 +18,7 @@ const Aboutdata: datatype[] = [
         imgwidth: 130,
         imgheight: 130,
         paragraph: 'Surau Elmina Valley kini membuka peluang untuk mengisi kekosongan jawatan sebagai SIAK (Sistem Informasi & Aktiviti Keagamaan).\n',
-        link: '/'
+        link: '/siak'
     },
     {
         heading: "Tabung Khairat.",

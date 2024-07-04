@@ -5,6 +5,7 @@ import { Bars3Icon } from '@heroicons/react/24/outline';
 import Drawer from "./Drawer";
 import Drawerdata from "./Drawerdata";
 import Contactusform from './Contactus';
+import { useRouter } from 'next/navigation'
 
 interface NavigationItem {
     name: string;
@@ -24,18 +25,32 @@ const navigation: NavigationItem[] = [
         current: false,
         children: [
             { name: 'Jawatankuasa PROTEM', href: '/ajk', current: false },
-            { name: 'Pendaftaran Ahli Tabung Khairat', href: 'https://form.jotform.com/elminavalley/TabungKhairat', current: false },
+            { name: 'Pendaftaran Ahli Tabung Khairat', href: '/khairat', current: false },
+            { name: 'Pendaftaran Ahli Tabung Khairat', href: '/siak', current: false },
             // Add more dropdown items as needed
         ]
     },
-]
+];
 
 function classNames(...classes: string[]) {
-    return classes.filter(Boolean).join(' ')
+    return classes.filter(Boolean).join(' ');
 }
 
-const Navbar = () => {
+const Navbar = ({ isHome }: { isHome: boolean }) => {
     const [isOpen, setIsOpen] = React.useState(false);
+    const router = useRouter(); // Use the useRouter hook
+
+    // Function to handle navigation based on current page
+    const handleNavigation = (href: string) => {
+        if (isHome) {
+            // Navigate to the section on the home page
+            // Example: Scroll to section with id
+            document.getElementById(href.substring(1))?.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            // Navigate to the homepage
+            router.push('/');
+        }
+    };
 
     return (
         <Disclosure as="nav" className="navbar">
@@ -59,6 +74,7 @@ const Navbar = () => {
                                             {item.children ? (
                                                 <Disclosure.Button as="div" className="relative">
                                                     <span
+                                                        onClick={() => handleNavigation(item.href)}
                                                         className={classNames(
                                                             item.current ? 'bg-gray-900' : 'navlinks hover:text-black',
                                                             'px-3 py-4 rounded-md text-ml font-bold cursor-pointer'
@@ -73,7 +89,7 @@ const Navbar = () => {
                                                                 key={child.name}
                                                                 href={child.href}
                                                                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                                                target='_blank'
+                                                                // target='_blank'
                                                             >
                                                                 {child.name}
                                                             </Link>
@@ -114,7 +130,7 @@ const Navbar = () => {
                 </div>
             </>
         </Disclosure>
-    )
-}
+    );
+};
 
 export default Navbar;
