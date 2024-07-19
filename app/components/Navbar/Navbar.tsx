@@ -14,10 +14,10 @@ interface NavigationItem {
 }
 
 const navigation: NavigationItem[] = [
-    { name: 'Pengumuman', href: '#aboutus-section', current: false },
-    { name: 'Buletin', href: '#blog-section', current: false },
-    { name: 'Galeri', href: '#galeri-section', current: false },
-    { name: 'FAQ', href: '#faq-section', current: false },
+    { name: 'Pengumuman', href: '/#aboutus-section', current: false },
+    { name: 'Buletin', href: '/#blog-section', current: false },
+    { name: 'Galeri', href: '/#galeri-section', current: false },
+    { name: 'FAQ', href: '/#faq-section', current: false },
     { 
         name: 'Pautan', 
         href: '#pautan-section', 
