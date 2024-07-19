@@ -26,6 +26,7 @@ const navigation: NavigationItem[] = [
             { name: 'Jawatankuasa PROTEM', href: '/ajk', current: false },
             { name: 'Pendaftaran Ahli Tabung Khairat', href: '/khairat', current: false },
             { name: 'Kekosongan Jawatan SIAK', href: '/siak', current: false },
+            { name: 'Kutipan Bulanan Tabung Surau Elmina Valley', href: '/tabung', current: false },
             // Add more dropdown items as needed
         ]
     },

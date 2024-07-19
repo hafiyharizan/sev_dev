@@ -17,6 +17,14 @@ interface DataType {
 
 const postData: DataType[] = [
     {
+        heading: 'Kutipan Bulanan Tabung SEV',
+        heading2: 'Jumlah Kutipan Bulanan Tabung SEV',
+        name: "Published on",
+        date: 'Julai 19, 2024',
+        imgSrc: '/images/articles/article6.jpg',
+        linkbuletin: '/tabung',
+    },
+    {
         heading: 'Tabung Khairat Kematian',
         heading2: 'Pendaftaran Keahlian Kini Dibuka',
         name: "Published on",
