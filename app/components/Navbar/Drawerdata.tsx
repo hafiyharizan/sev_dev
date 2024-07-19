@@ -92,7 +92,7 @@ const Data = () => {
                             Contact Us
                         </button>
                         {/* Uncomment below to render Contactusform component */}
-                        {/* <Contactusform /> */}
+                        <Contactusform />
                     </div>
                 </div>
             </div>
