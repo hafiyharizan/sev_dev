@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from "next/image";
 
 const JobVacancyAnnouncement: React.FC = () => {
     return (
@@ -9,13 +10,13 @@ const JobVacancyAnnouncement: React.FC = () => {
             <br />
             <p>Kami dengan sukacitanya ingin memaklumkan bahawa Surau Elmina Valley kini membuka peluang untuk mengisi kekosongan jawatan sebagai SIAK (Sistem Informasi & Aktiviti Keagamaan).</p>
             <br />
-            <iframe 
-                src="/images/siak.pdf" 
-                width="90%" 
-                height="800px"
-                style={{ border: 'none' }}
-                title="SIAK Job Vacancy Announcement PDF"
-            ></iframe>
+            <Image 
+                src="/images/siak.jpg" 
+                alt="gaby" 
+                width={600} 
+                height={600} 
+                className="rounded-3xl"
+            />
 
             <p>Sekian, terima kasih.</p>
             <br />
