@@ -19,9 +19,11 @@ const navigation: NavigationItem[] = [
         href: '#pautan-section', 
         current: false,
         children: [
-            { name: 'Link 1', href: '/link1', current: false },
-            { name: 'Link 2', href: '/link2', current: false },
-            // Add more children links as needed
+            { name: 'Jawatankuasa PROTEM', href: '/ajk', current: false },
+            { name: 'Pendaftaran Ahli Tabung Khairat', href: '/khairat', current: false },
+            { name: 'Kekosongan Jawatan SIAK', href: '/siak', current: false },
+            { name: 'Kutipan Bulanan Tabung Surau Elmina Valley', href: '/tabung', current: false },
+            // Add more dropdown items as needed
         ]
     },
 ]

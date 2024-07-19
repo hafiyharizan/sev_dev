@@ -12,7 +12,7 @@ const TabungAnnouncement: React.FC = () => {
 
             <p>Berikut jumlah kutipan bulanan Tabung Surau Elmina Valley sehingga Julai 2024:</p>
             <br />
-            <div style={{ marginTop: '-20px', marginBottom: '-120px', marginLeft: '-20px' }}>
+            <div style={{ marginTop: '-20px', marginBottom: '-100px', marginLeft: '-20px' }}>
                 <Image 
                     src="/images/articles/article6.jpg" 
                     alt="gaby" 
