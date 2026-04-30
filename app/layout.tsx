@@ -9,19 +9,25 @@ export const metadata = {
   description: 'Portal Rasmi Surau Elmina Valley',
 }
 
+const enableVercelInsights = process.env.VERCEL === '1';
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body>
+    <html lang="ms">
+      <body className="antialiased">
         <Navbar />
         {children}
         <Footer />
-        <Analytics />
-        <SpeedInsights />
+        {enableVercelInsights ? (
+          <>
+            <Analytics />
+            <SpeedInsights />
+          </>
+        ) : null}
         </body>
     </html>
   )

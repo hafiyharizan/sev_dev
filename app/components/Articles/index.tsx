@@ -120,10 +120,16 @@ export default class MultipleItems extends Component {
                             <div key={i} >
 
                                 <div className='bg-white m-3 px-3 pt-3 pb-12 my-10 shadow-lg rounded-3xl relative'>
-                                    <Image src={items.imgSrc} alt="gaby" width={389} height={262} className="inline-block m-auto rounded-3xl max-h-60" />
+                                    <Image src={items.imgSrc} alt={items.heading} width={389} height={262} className="inline-block m-auto rounded-3xl h-60 w-full object-cover" />
 
-                                    <Link href={items.linkbuletin} target="_blank">
-                                        <h3 className="absolute bg-blue text-white hover:bg-black hover:shadow-xl py-3 px-6 rounded-full article-img">Lihat Buletin</h3>
+                                    <Link
+                                        href={items.linkbuletin}
+                                        target={items.linkbuletin.startsWith('http') ? '_blank' : undefined}
+                                        rel={items.linkbuletin.startsWith('http') ? 'noopener noreferrer' : undefined}
+                                        className="absolute bg-blue text-white hover:bg-black hover:shadow-xl py-3 px-6 rounded-full article-img transition-colors"
+                                        aria-label={`Lihat buletin ${items.heading}`}
+                                    >
+                                        Lihat Buletin
                                     </Link>
                                     <h4 className='text-2xl font-bold pt-6 text-black'>{items.heading}</h4>
                                     <h4 className='text-xl font-semibold pt-1 text-black'>{items.heading2}</h4>

@@ -11,20 +11,39 @@
 body {
   margin: 0;
   font-family: 'Urbanist', sans-serif;
-  position: relative; /* Ensure the body has a positioning context */
+  position: relative;
+  min-height: 100vh;
+  overflow-x: hidden;
+  color: #241A24;
+  background-color: #ffffff;
 }
 
 body::before {
   content: '';
-  position: fixed; /* Fixed position ensures it covers the entire viewport */
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url(/images/bg1.png); /* Adjust the path as needed */
-  background-size: cover; /* Adjust to cover or contain as desired */
-  opacity: 0.3; /* Adjust opacity as per your design */
-  z-index: -1; /* Behind all other content */
+  background-image: url(/images/bg1.png);
+  background-size: cover;
+  opacity: 0.3;
+  z-index: -1;
+  pointer-events: none;
+}
+
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+iframe:focus-visible {
+  outline: 3px solid rgba(0, 102, 255, 0.45);
+  outline-offset: 3px;
 }
 
 html:not([data-scroll="0"]) .navbar {
@@ -32,7 +51,7 @@ html:not([data-scroll="0"]) .navbar {
   top: 0;
   width: 100%;
   background-color: white !important;
-  opacity: 1.9;
+  opacity: 1;
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
   transition: 0.4s linear;
   padding: 0px !important;
@@ -51,6 +70,7 @@ html:not([data-scroll="0"]) .border-right {
 html {
   --scroll-behavior: smooth !important;
   scroll-behavior: smooth !important;
+  overflow-x: hidden;
 }
 
 .navbar {
@@ -245,6 +265,13 @@ html {
   right: 30px;
 }
 
+@media only screen and (max-width: 640px) {
+  .article-img {
+    top: 210px;
+    right: 20px;
+  }
+}
+
 .w-345 {
   width: 400px;
 }
@@ -322,6 +349,10 @@ html {
 
 
 /* SLICK  */
+.slick-slider {
+  overflow: hidden;
+}
+
 .slick-prev,
 .slick-next {
   font-size: 0;
@@ -341,11 +372,13 @@ html {
 }
 
 .slick-next {
-  right: -70px !important;
+  right: 12px !important;
+  z-index: 2;
 }
 
 .slick-prev {
-  left: -60px !important;
+  left: 12px !important;
+  z-index: 2;
 }
 
 .slick-prev:before,

@@ -1,22 +1,23 @@
 "use client"
 import { Disclosure } from '@headlessui/react'
 import { ChevronUpIcon } from '@heroicons/react/20/solid'
+import Image from 'next/image'
 
 const FAQ = () => {
     return (
-        <div id="faq-section" className='mx-auto max-w-7xl py-24 lg:px-8 bg-faqblue rounded-2xl my-16 faq-bg'>
+        <div id="faq-section" className='mx-auto max-w-7xl py-24 px-4 lg:px-8 bg-faqblue rounded-2xl my-16 faq-bg'>
             <h3 className='text-xl font-normal text-white text-center mb-6'>FAQ</h3>
             <h2 className='text-4xl lg:text-6xl font-semibold text-center text-white'>Soalan-soalan <br /> Lazim.</h2>
-            <div className="w-full px-4 pt-16">
+            <div className="w-full pt-16">
                 <div className="mx-auto w-full max-w-5xl rounded-2xl bg-white py-8 px-6 mb-5">
                     <Disclosure>
                         {({ open }) => (
                             <>
-                                <Disclosure.Button className="flex w-full justify-between rounded-lg px-4 py-2 text-left text-2xl font-medium">
+                                <Disclosure.Button className="flex w-full items-start justify-between gap-4 rounded-lg px-4 py-2 text-left text-lg sm:text-2xl font-medium">
                                     <span>Adakah surau mengadakan Solat Jumaat?</span>
                                     <ChevronUpIcon
                                         className={`${open ? 'rotate-180 transform' : ''
-                                            } h-5 w-5 text-purple-500`}
+                                            } h-5 w-5 flex-shrink-0 text-purple-500`}
                                     />
                                 </Disclosure.Button>
                                 <Disclosure.Panel className="px-4 pt-4 pb-2 text-base text-black font-normal opacity-80">
@@ -32,11 +33,11 @@ const FAQ = () => {
                     <Disclosure as="div" className="mt-2">
                         {({ open }) => (
                             <>
-                                <Disclosure.Button className="flex w-full justify-between rounded-lg px-4 py-2 text-left text-2xl font-medium">
+                                <Disclosure.Button className="flex w-full items-start justify-between gap-4 rounded-lg px-4 py-2 text-left text-lg sm:text-2xl font-medium">
                                     <span>Adakah diadakan solat jemaah setiap solat fardhu ?</span>
                                     <ChevronUpIcon
                                         className={`${open ? 'rotate-180 transform' : ''
-                                            } h-5 w-5 text-purple-500`}
+                                            } h-5 w-5 flex-shrink-0 text-purple-500`}
                                     />
                                 </Disclosure.Button>
                                 <Disclosure.Panel className="px-4 pt-4 pb-2 text-base text-black font-normal opacity-80">
@@ -52,11 +53,11 @@ const FAQ = () => {
                     <Disclosure as="div" className="mt-2">
                         {({ open }) => (
                             <>
-                                <Disclosure.Button className="flex w-full justify-between rounded-lg px-4 py-2 text-left text-2xl font-medium">
+                                <Disclosure.Button className="flex w-full items-start justify-between gap-4 rounded-lg px-4 py-2 text-left text-lg sm:text-2xl font-medium">
                                     <span>Bagaimana jika ingin derma kepada surau?</span>
                                     <ChevronUpIcon
                                         className={`${open ? 'rotate-180 transform' : ''
-                                            } h-5 w-5 text-purple-500`}
+                                            } h-5 w-5 flex-shrink-0 text-purple-500`}
                                     />
                                 </Disclosure.Button>
                                 <Disclosure.Panel className="px-4 pt-4 pb-2 text-base text-black font-normal opacity-80">
@@ -75,9 +76,9 @@ const FAQ = () => {
                                     <br />
                                     <h3>3. QR Code:</h3>
 
-                                    <div className="flex items-start">
-                                    <p className="mr-4">Scan QR Code ini untuk menderma.</p>
-                                    <img src="/images/qr_square.png" alt="qrcode" width="136" height="220" className="rounded-2xl" />
+                                    <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
+                                    <p className="sm:mr-4">Scan QR Code ini untuk menderma.</p>
+                                    <Image src="/images/qr_square.png" alt="QR code derma Surau Elmina Valley" width={136} height={220} className="rounded-2xl" />
                                     </div>
 
                                     Jika ingin menderma barangan sila hubungi pihak surau terlebih dahulu. <br />

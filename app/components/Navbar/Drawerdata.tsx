@@ -19,11 +19,9 @@ const navigation: NavigationItem[] = [
         href: '#pautan-section', 
         current: false,
         children: [
-            { name: 'Jawatankuasa PROTEM', href: '/ajk', current: false },
             { name: 'Pendaftaran Ahli Tabung Khairat', href: '/khairat', current: false },
             { name: 'Kekosongan Jawatan SIAK', href: '/siak', current: false },
             { name: 'Kutipan Bulanan Tabung Surau Elmina Valley', href: '/tabung', current: false },
-            // Add more dropdown items as needed
         ]
     },
 ]
@@ -48,16 +46,17 @@ const Data = () => {
                             <React.Fragment key={item.name}>
                                 {item.children ? (
                                     <div className="relative">
-                                        <span
+                                        <button
+                                            type="button"
                                             className={classNames(
                                                 item.current ? 'bg-gray-900 text-purple' : 'text-black hover:bg-gray-700 hover:text-purple',
-                                                'block py-2 rounded-md text-base font-medium cursor-pointer'
+                                                'block w-full py-2 text-left rounded-md text-base font-medium cursor-pointer'
                                             )}
                                             aria-current={item.current ? 'page' : undefined}
                                             onClick={toggleDropdown} // Toggle dropdown on click
                                         >
                                             {item.name}
-                                        </span>
+                                        </button>
                                         {isOpen && ( // Show dropdown if isOpen is true
                                             <div className="absolute bg-white shadow-lg rounded-md py-2 mt-2 w-48 z-10">
                                                 {item.children.map((child) => (
@@ -86,13 +85,12 @@ const Data = () => {
                                 )}
                             </React.Fragment>
                         ))}
-                        <div className="mt-4"></div>
-                        {/* Contact Us Button */}
-                        <button className="bg-navyblue w-full hover:text-white text-white border border-purple font-medium py-2 px-4 rounded">
-                            Contact Us
-                        </button>
-                        {/* Uncomment below to render Contactusform component */}
-                        <Contactusform />
+                        <div className="mt-4">
+                            <Contactusform
+                                buttonWrapperClassName="block"
+                                buttonClassName="bg-navyblue w-full hover:bg-blue hover:text-white text-white border border-navyblue font-medium py-3 px-4 rounded-full transition-colors"
+                            />
+                        </div>
                     </div>
                 </div>
             </div>

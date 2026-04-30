@@ -114,20 +114,24 @@ export default class MultipleItems extends Component {
                                                 maxWidth: '100%', // Ensures iframe doesn't exceed container width
                                             }}
                                             src={item.videoSrc}
-                                            title="YouTube video player"
-                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                            title={item.heading}
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                             referrerPolicy="strict-origin-when-cross-origin"
                                             allowFullScreen
                                         ></iframe>
-                                        <div className="w-345">
+                                        <div className="w-full max-w-md">
                                             <h4 className='sm:text-4xl font-bold sm:pt-6 text-center sm:text-start mt-10 text-white'>{item.heading}</h4>
                                         </div>
                                     </div>
                                 ) : (
                                     <div className='bg-transparent m-3 pb-12 my-10 rounded-3xl'>
-                                        <a href={item.link} target="_blank" rel="noopener noreferrer">
-                                            <img src={item.imgSrc} alt={item.heading} className="rounded-2xl w-full max-h-96" />
-                                            <div className="w-345">
+                                        <a
+                                            href={item.link}
+                                            target={item.link.startsWith('http') ? '_blank' : undefined}
+                                            rel={item.link.startsWith('http') ? 'noopener noreferrer' : undefined}
+                                        >
+                                            <Image src={item.imgSrc} alt={item.heading} width={640} height={384} className="rounded-2xl w-full h-96 object-cover" />
+                                            <div className="w-full max-w-md">
                                                 <h4 className='sm:text-4xl font-bold sm:pt-6 text-center sm:text-start mt-10 text-white'>{item.heading}</h4>
                                             </div>
                                         </a>

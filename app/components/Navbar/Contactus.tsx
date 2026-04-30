@@ -1,11 +1,23 @@
 "use client"
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, useState } from 'react';
+import type { FormEvent } from 'react';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWhatsapp, faTelegram } from '@fortawesome/free-brands-svg-icons';
+import { XMarkIcon } from '@heroicons/react/24/outline';
 
-const Contactusform = () => {
+interface ContactusformProps {
+    buttonClassName?: string;
+    buttonWrapperClassName?: string;
+    label?: string;
+}
+
+const Contactusform = ({
+    buttonClassName = 'justify-end text-base font-semibold bg-transparent py-2 px-6 lg:px-6 navbutton rounded-full hover:bg-navyblue hover:text-white transition-colors',
+    buttonWrapperClassName = 'hidden lg:block',
+    label = 'Hubungi Kami',
+}: ContactusformProps) => {
     let [isOpen, setIsOpen] = useState(false)
 
     const [inputValues, setInputValues] = useState({
@@ -19,15 +31,13 @@ const Contactusform = () => {
         setInputValues(prevState => ({ ...prevState, [name]: value }));
     }
 
-    const handleClick = () => {
-        alert(`Name: ${inputValues.input1}, Email-address: ${inputValues.input2}, Message: ${inputValues.input3}`);
-        setIsOpen(false)
-    }
-
-    // FORM SUBMIT
-    const handleSubmit = (event: { preventDefault: () => void; }) => {
+    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        // handle form submission
+        const message = encodeURIComponent(
+            `Assalamualaikum, saya ${inputValues.input1} (${inputValues.input2}). ${inputValues.input3}`
+        );
+        window.open(`https://wa.me/60192768406?text=${message}`, '_blank', 'noopener,noreferrer');
+        setIsOpen(false);
     };
 
     const isDisabled = Object.values(inputValues).some((value) => value === '');
@@ -44,14 +54,9 @@ const Contactusform = () => {
     return (
         <>
             <div className=" inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto md:ml-6 sm:pr-0">
-                {/* <div className='lg:hidden'>
-                    <button type="button" className='bg-navyblue w-full hover:text-white text-white border border-purple font-medium py-2 px-4 rounded' onClick={openModal}>
-                        Contact Us
-                    </button>
-                </div> */}
-                <div className='hidden lg:block'>
-                    <button type="button" className='justify-end text-ml font-semibold bg-transparent py-2 px-6 lg:px-6 navbutton rounded-full hover:bg-navyblue hover:text-white' onClick={openModal}>
-                        Hubungi Kami
+                <div className={buttonWrapperClassName}>
+                    <button type="button" className={buttonClassName} onClick={openModal}>
+                        {label}
                     </button>
                 </div>
             </div>
@@ -82,6 +87,14 @@ const Contactusform = () => {
                                 leaveTo="opacity-0 scale-95"
                             >
                                 <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                                    <button
+                                        type="button"
+                                        aria-label="Tutup borang hubungi kami"
+                                        className="absolute right-4 top-4 rounded-full p-2 text-gray-500 hover:bg-gray-100 hover:text-black"
+                                        onClick={closeModal}
+                                    >
+                                        <XMarkIcon className="h-5 w-5" aria-hidden="true" />
+                                    </button>
 
                                     <div className="py-8 lg:py-8 px-4 mx-auto max-w-screen-md">
                                         <div className="flex flex-shrink-0 items-center justify-center">
@@ -89,62 +102,63 @@ const Contactusform = () => {
                                             Surau Elmina Valley
                                             </Link>
                                         </div>
+                                        <Dialog.Title className="sr-only">Hubungi Surau Elmina Valley</Dialog.Title>
                                         <p className="mb-4 lg:mb-8 mt-8 font-light text-center text-gray-500 dark:text-gray-400 sm:text-xl">Anda ingin dapatkan info lebih lanjut? Hubungi kami</p>
                                         <form action="#" className="space-y-8" onSubmit={handleSubmit}>
                                             <div>
-                                                <label htmlFor="text" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Nama</label>
+                                                <label htmlFor="contact-name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Nama</label>
                                                 <input
-                                                    id="text"
+                                                    id="contact-name"
 
                                                     name="input1"
                                                     value={inputValues.input1}
                                                     onChange={handleChange}
 
                                                     type="text"
-                                                    autoComplete="current-password"
+                                                    autoComplete="name"
                                                     required
                                                     className="relative block w-full appearance-none  rounded-md border border-linegrey px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                                                    placeholder="Name..."
+                                                    placeholder="Nama penuh"
                                                 />
                                             </div>
                                             <div>
-                                                <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">E-mail</label>
+                                                <label htmlFor="contact-email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">E-mail</label>
                                                 <input
-                                                    id="email"
+                                                    id="contact-email"
                                                     name="input2"
                                                     value={inputValues.input2}
                                                     onChange={handleChange}
 
                                                     type="email"
-                                                    autoComplete="current-password"
+                                                    autoComplete="email"
                                                     required
                                                     className="relative block w-full appearance-none  rounded-md border border-linegrey px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                                                     placeholder="xyz@email.com"
                                                 />
                                             </div>
                                             <div className="sm:col-span-2">
-                                                <label htmlFor="message" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Mesej Anda</label>
+                                                <label htmlFor="contact-message" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Mesej Anda</label>
                                                 <textarea
-                                                    id="message"
+                                                    id="contact-message"
                                                     name="input3"
                                                     value={inputValues.input3}
                                                     onChange={handleChange}
-                                                    className="relative block w-full appearance-none  rounded-md border border-linegrey px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="Leave a comment..."></textarea>
+                                                    rows={4}
+                                                    className="relative block w-full appearance-none  rounded-md border border-linegrey px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="Tulis mesej anda"></textarea>
                                             </div>
                                             <button type="submit"
-                                                onClick={handleClick}
                                                 disabled={isDisabled}
-                                                className="py-3 px-5 text-sm disabled:opacity-50 font-medium w-full text-center text-white rounded-lg bg-blue focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Send message</button>
+                                                className="py-3 px-5 text-sm disabled:cursor-not-allowed disabled:opacity-50 font-medium w-full text-center text-white rounded-lg bg-blue hover:bg-hoblue focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 transition-colors">Hantar melalui WhatsApp</button>
 
                                             <p className="text-center">
                                                 Atau klik icon di-bawah untuk hubungi kami terus di Whatsapp/Telegram:
                                             </p>
                                             {/* WHATSAPP AND TELEGRAM BUTTONS */}
                                             <div className="flex text-center items-center space-x-4 justify-center">
-                                                <a href="https://wa.me/+60192768406" target="_blank" rel="noopener noreferrer">
+                                                <a href="https://wa.me/60192768406" target="_blank" rel="noopener noreferrer" aria-label="Hubungi Surau Elmina Valley melalui WhatsApp">
                                                     <FontAwesomeIcon icon={faWhatsapp} size="lg" style={{ fontSize: '34px' }}/>
                                                 </a>
-                                                <a href="https://t.me/+60192768406" target="_blank" rel="noopener noreferrer">
+                                                <a href="https://t.me/+60192768406" target="_blank" rel="noopener noreferrer" aria-label="Hubungi Surau Elmina Valley melalui Telegram">
                                                     <FontAwesomeIcon icon={faTelegram} size="lg" style={{ fontSize: '34px' }}/>
                                                 </a>
                                             </div>
