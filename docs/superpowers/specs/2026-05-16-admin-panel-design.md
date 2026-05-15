@@ -91,7 +91,7 @@ Cookie value: HMAC-SHA256 of `ADMIN_PASSWORD` using a `SESSION_SECRET` env var a
 | heading | varchar(200) | NOT NULL |
 | heading2 | varchar(200) | NOT NULL |
 | thumbnail_url | text | NOT NULL |
-| date | date | NOT NULL — stored as DATE, formatted for display |
+| date | timestamptz | NOT NULL — stored as full timestamp, formatted for display using locale (e.g. "16 Mei 2026") |
 | link | varchar(500) | NOT NULL |
 | sort_order | integer | NOT NULL default 0 |
 | deleted_at | timestamptz | nullable |
@@ -188,7 +188,7 @@ Two-panel layout (stacks on mobile):
 
 **Pengumuman:** Tajuk (max 200), Thumbnail (upload), Penerangan, Pautan (URL)
 
-**Buletin:** Tajuk Utama (max 200), Tajuk Kecil (max 200), Thumbnail (upload), Tarikh (date picker → stored as DATE), Pautan (URL)
+**Buletin:** Tajuk Utama (max 200), Tajuk Kecil (max 200), Thumbnail (upload), Tarikh (datetime-local picker → stored as `timestamptz`, displayed with Malay locale formatting), Pautan (URL)
 
 **Galeri:** Tajuk (max 200), Thumbnail (upload), Pautan Album/Video (URL), Jenis (Photo / Video toggle)
 
@@ -251,7 +251,7 @@ SUPABASE_SERVICE_ROLE_KEY=
 
 ## Out of Scope
 
-- Slug-based routing / detail pages (no dynamic routes planned)
+- Slug fields and detail pages (future enhancement — add when per-item pages are needed)
 - Multiple admin accounts / user management
 - Draft/publish workflow (all saves are immediately live)
 - Rich text editor (plain textarea)
