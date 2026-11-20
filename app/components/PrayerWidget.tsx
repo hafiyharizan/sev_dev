@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { m } from 'motion/react';
 import { formatTimeMY, formatCountdown, nowMinutesMY, todayMY } from '@/lib/time/clock';
 import { iqamahTimes, nextPrayer, rolloverDays } from '@/lib/time/prayer';
 import { PRAYERS, type DayTimes, type IqamahOffsets, type Prayer } from '@/lib/types';
@@ -44,11 +45,11 @@ export default function PrayerWidget({
         </thead>
         <tbody>
           {ROWS.map((p) => (
-            <tr key={p} className={isNext(p) ? 'bg-lightblue font-semibold' : ''}>
+            <m.tr key={p} initial={false} animate={{ backgroundColor: isNext(p) ? '#d9e8ff' : '#ffffff' }} transition={{ duration: 0.3 }} className={isNext(p) ? 'font-semibold' : ''}>
               <td className="rounded-l-lg px-2 py-2">{LABELS[p]}</td>
               <td className="px-2 py-2">{formatTimeMY(days.today![p])}</td>
               <td className="rounded-r-lg px-2 py-2">{(PRAYERS as readonly string[]).includes(p) ? formatTimeMY(iqamah[p as Prayer]) : '—'}</td>
-            </tr>
+            </m.tr>
           ))}
         </tbody>
       </table>

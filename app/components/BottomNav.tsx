@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Dialog } from '@headlessui/react';
+import { m } from 'motion/react';
 import { CalendarDaysIcon, ClockIcon, EllipsisHorizontalIcon, HomeIcon, MegaphoneIcon } from '@heroicons/react/24/outline';
 
 const TABS = [
@@ -44,7 +45,7 @@ export default function BottomNav() {
       <Dialog open={open} onClose={() => setOpen(false)} className="relative z-40 md:hidden">
         <div className="fixed inset-0 bg-black/40" aria-hidden="true" />
         <div className="fixed inset-x-0 bottom-0">
-          <Dialog.Panel className="rounded-t-3xl bg-white p-6 pb-10">
+          <Dialog.Panel as={m.div} initial={{ y: 60 }} animate={{ y: 0 }} transition={{ duration: 0.25, ease: 'easeOut' }} className="rounded-t-3xl bg-white p-6 pb-10">
             <Dialog.Title className="mb-3 text-lg font-semibold">Lagi</Dialog.Title>
             <ul>
               {MORE.map((m) => (

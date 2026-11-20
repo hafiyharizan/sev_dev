@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
+import { m } from 'motion/react';
 import ImageUpload from '@/app/components/admin/ImageUpload';
 import ShareButton from '@/app/components/ShareButton';
 import type { Post } from '@/lib/posts';
@@ -56,11 +57,11 @@ export default function PostForm({ post }: { post: Post | null }) {
       <Publish editing={!!post} />
       {state.error ? <p role="alert" className="text-sm text-red-600">{state.error}</p> : null}
       {state.ok && state.slug ? (
-        <div role="status" className="space-y-3 rounded-2xl bg-green-50 p-4">
+        <m.div role="status" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.25 }} className="space-y-3 rounded-2xl bg-green-50 p-4">
           <p className="font-medium">Disimpan ✓</p>
           <p className="break-all text-sm">/hebahan/{state.slug}</p>
           <ShareButton path={`/hebahan/${state.slug}`} title={title || 'Hebahan SEV'} />
-        </div>
+        </m.div>
       ) : null}
     </form>
   );

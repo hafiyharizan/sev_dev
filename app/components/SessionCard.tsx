@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import FadeIn from './FadeIn';
 import { formatTimeMY } from '@/lib/time/clock';
 import { sessionTimeLabel } from '@/lib/time/session-time';
 import type { SessionView } from '@/lib/schedule';
@@ -9,6 +10,7 @@ export default function SessionCard({ session: s, day, showDate }: { session: Se
   const t = sessionTimeLabel(s.timing, day);
   const cancelled = s.status === 'cancelled';
   return (
+    <FadeIn>
     <Link href={`/jadual/${s.slug}`} className="flex items-stretch gap-4 rounded-2xl bg-white p-4 shadow-sm">
       <span className="w-2 shrink-0 rounded-full" style={{ background: s.type.colour }} aria-hidden="true" />
       <div className="min-w-0 flex-1">
@@ -25,5 +27,6 @@ export default function SessionCard({ session: s, day, showDate }: { session: Se
         <img src={s.speaker.photoUrl} alt="" loading="lazy" decoding="async" className="h-16 w-16 shrink-0 self-center rounded-full object-cover" />
       ) : null}
     </Link>
+    </FadeIn>
   );
 }

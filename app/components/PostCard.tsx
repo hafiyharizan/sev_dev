@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import FadeIn from './FadeIn';
 import { formatDateMY } from '@/lib/format';
 import type { Post } from '@/lib/posts';
 
@@ -20,7 +21,9 @@ export default function PostCard({ post }: { post: Post }) {
     </>
   );
   const cls = 'block rounded-3xl bg-white p-4 shadow-sm';
-  return post.externalUrl ? (
+  return (
+    <FadeIn>
+    {post.externalUrl ? (
     <a href={post.externalUrl} className={cls}
       {...(post.externalUrl.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
       aria-label={post.title}>
@@ -28,5 +31,7 @@ export default function PostCard({ post }: { post: Post }) {
     </a>
   ) : (
     <Link href={`/hebahan/${post.slug}`} className={cls} aria-label={post.title}>{inner}</Link>
+  )}
+    </FadeIn>
   );
 }
