@@ -1,4 +1,4 @@
-import { publicUrl } from '@/lib/storage';
+import { isUploadPath, publicUrl } from '@/lib/storage';
 
 export type PostType = 'pengumuman' | 'buletin';
 
@@ -27,7 +27,6 @@ export type PostInput = {
 };
 
 export const URL_ERROR = 'Pautan mesti bermula dengan http://, https:// atau /';
-const IMAGE_PATH = /^uploads\/posts\/[0-9a-f-]{36}\.(webp|jpg|png)$/;
 
 const text = (fd: FormData, key: string) => String(fd.get(key) ?? '').trim();
 const orNull = (s: string) => (s === '' ? null : s);
@@ -49,7 +48,7 @@ export function validatePostInput(fd: FormData): { ok: true; value: PostInput } 
   }
 
   const imagePath = orNull(text(fd, 'image_path'));
-  if (imagePath && !IMAGE_PATH.test(imagePath)) return { ok: false, error: 'Gambar tidak sah.' };
+  if (imagePath && !isUploadPath('posts', imagePath)) return { ok: false, error: 'Gambar tidak sah.' };
 
   return {
     ok: true,

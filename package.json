@@ -38,10 +38,12 @@
   },
   "devDependencies": {
     "@electric-sql/pglite": "^0.5.17",
+    "@resvg/resvg-js": "^2.6.2",
     "@types/node": "^22.20.5",
     "@types/react": "^18.3.31",
     "@types/react-dom": "^18.3.7",
     "@types/react-slick": "^0.23.10",
+    "satori": "^0.63.2",
     "server-only": "^0.0.1",
     "serwist": "^9.5.15",
     "supabase": "^3.2.0",
