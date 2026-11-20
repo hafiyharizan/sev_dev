@@ -29,3 +29,18 @@ describe('clock', () => {
     expect(nowMinutesMY(new Date('2026-11-19T16:30:00Z'))).toBe(30);
   });
 });
+
+import { formatCountdown } from '@/lib/time/clock';
+
+describe('formatCountdown', () => {
+  it('says minutes under an hour and hours + minutes above', () => {
+    expect(formatCountdown(42)).toBe('42 minit');
+    expect(formatCountdown(65)).toBe('1 jam 5 minit');
+    expect(formatCountdown(120)).toBe('2 jam');
+    expect(formatCountdown(1)).toBe('1 minit');
+  });
+
+  it('is "kurang seminit" for zero or less', () => {
+    expect(formatCountdown(0)).toBe('kurang seminit');
+  });
+});

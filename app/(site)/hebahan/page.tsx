@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import PostCard from '@/app/components/PostCard';
 import { listPosts } from '@/lib/data/posts';
+import { safe } from '@/lib/safe';
 
 export const metadata = { title: 'Hebahan · Surau Elmina Valley' };
 export const revalidate = 3600;
@@ -13,7 +14,7 @@ const FILTERS = [
 
 export default async function HebahanPage({ searchParams }: { searchParams: { jenis?: string } }) {
   const jenis = searchParams.jenis === 'pengumuman' || searchParams.jenis === 'buletin' ? searchParams.jenis : undefined;
-  const posts = await listPosts({ type: jenis });
+  const posts = await safe(listPosts({ type: jenis }), []);
   return (
     <main className="mx-auto max-w-7xl px-4 py-10 lg:px-8">
       <h1 className="text-4xl font-bold">Hebahan</h1>

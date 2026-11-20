@@ -24,3 +24,15 @@ export function nextPrayer(today: DayTimes | null, tomorrow: DayTimes | null, no
     isTomorrow: true,
   };
 }
+
+/**
+ * Server pages are cached, so the phone's clock can be past midnight while it still holds yesterday's "today".
+ * Re-aligns the two days to the client's current date.
+ */
+export function rolloverDays(
+  today: DayTimes | null, tomorrow: DayTimes | null, clientDate: string,
+): { today: DayTimes | null; tomorrow: DayTimes | null } {
+  if (today && today.date === clientDate) return { today, tomorrow };
+  if (tomorrow && tomorrow.date === clientDate) return { today: tomorrow, tomorrow: null };
+  return { today: null, tomorrow: null };
+}

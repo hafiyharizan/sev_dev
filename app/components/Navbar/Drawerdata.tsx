@@ -10,10 +10,11 @@ interface NavigationItem {
 }
 
 const navigation: NavigationItem[] = [
-    { name: 'Pengumuman', href: '#aboutus-section', current: true },
-    { name: 'Buletin', href: '#blog-section', current: false },
-    { name: 'Galeri', href: '#galeri-section', current: false },
-    { name: 'FAQ', href: '#faq-section', current: false },
+    { name: 'Waktu Solat', href: '/waktu-solat', current: false },
+    { name: 'Jadual', href: '/jadual', current: false },
+    { name: 'Hebahan', href: '/hebahan', current: false },
+    { name: 'Borang', href: '/borang', current: false },
+    { name: 'FAQ', href: '/#faq-section', current: false },
     { 
         name: 'Pautan', 
         href: '#pautan-section', 

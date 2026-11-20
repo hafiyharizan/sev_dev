@@ -12,3 +12,12 @@ describe('formatDateMY', () => {
     expect(formatDateMY('2026-11-20')).toBe('20 November 2026');
   });
 });
+
+import { formatDayMY } from '@/lib/format';
+
+describe('formatDayMY', () => {
+  it('names the weekday in Malay', () => {
+    expect(formatDayMY('2026-11-11')).toBe('Rabu, 11 November');
+    expect(formatDayMY('2026-11-08')).toBe('Ahad, 8 November');
+  });
+});

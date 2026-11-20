@@ -29,3 +29,12 @@ export function nowMinutesMY(now: Date = new Date()): number {
   const d = new Date(now.getTime() + MYT_OFFSET_MS);
   return d.getUTCHours() * 60 + d.getUTCMinutes();
 }
+
+/** 42 -> "42 minit", 65 -> "1 jam 5 minit", 120 -> "2 jam". */
+export function formatCountdown(minutes: number): string {
+  if (minutes < 1) return 'kurang seminit';
+  const h = Math.floor(minutes / 60);
+  const m = minutes % 60;
+  if (h === 0) return `${m} minit`;
+  return m === 0 ? `${h} jam` : `${h} jam ${m} minit`;
+}

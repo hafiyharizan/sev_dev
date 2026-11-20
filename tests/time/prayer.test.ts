@@ -36,3 +36,23 @@ describe('nextPrayer', () => {
     expect(nextPrayer(day('2026-11-20'), null, 22 * 60)).toBeNull();
   });
 });
+
+import { rolloverDays } from '@/lib/time/prayer';
+
+describe('rolloverDays (the page was loaded before midnight, the phone clock is now past it)', () => {
+  const today = day('2026-11-20');
+  const tomorrow = day('2026-11-21');
+
+  it('keeps the server days while the date still matches', () => {
+    expect(rolloverDays(today, tomorrow, '2026-11-20')).toEqual({ today, tomorrow });
+  });
+
+  it('promotes tomorrow to today after midnight', () => {
+    expect(rolloverDays(today, tomorrow, '2026-11-21')).toEqual({ today: tomorrow, tomorrow: null });
+  });
+
+  it('gives up cleanly when neither day matches', () => {
+    expect(rolloverDays(today, tomorrow, '2026-11-25')).toEqual({ today: null, tomorrow: null });
+    expect(rolloverDays(null, null, '2026-11-20')).toEqual({ today: null, tomorrow: null });
+  });
+});

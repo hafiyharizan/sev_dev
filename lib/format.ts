@@ -8,3 +8,12 @@ export function formatDateMY(value: string): string {
     year: 'numeric',
   });
 }
+
+/** "Rabu, 11 November": weekday and day in Malay, for agenda headings. Takes a plain YYYY-MM-DD date. */
+export function formatDayMY(date: string): string {
+  const d = new Date(`${date}T00:00:00+08:00`);
+  const opts = { timeZone: 'Asia/Kuala_Lumpur' } as const;
+  const weekday = d.toLocaleDateString('ms-MY', { ...opts, weekday: 'long' });
+  const rest = d.toLocaleDateString('ms-MY', { ...opts, day: 'numeric', month: 'long' });
+  return `${weekday.charAt(0).toUpperCase()}${weekday.slice(1)}, ${rest}`;
+}
