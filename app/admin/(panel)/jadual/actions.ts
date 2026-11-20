@@ -1,6 +1,7 @@
 'use server';
 
 import { requireUser } from '@/lib/auth';
+import { SESSION_EXPIRED } from '@/lib/auth-messages';
 import { createClient } from '@/lib/supabase/server';
 import {
   planCopy, planNewSessions, timingColumns, validateSessionInput,
@@ -16,7 +17,11 @@ const pad = (n: number) => String(n).padStart(2, '0');
 const lastDay = (y: number, m: number) => new Date(Date.UTC(y, m, 0)).getUTCDate();
 
 export async function saveSession(_prev: SessionFormState, fd: FormData): Promise<SessionFormState> {
-  await requireUser();
+  try {
+    await requireUser();
+  } catch {
+    return { error: SESSION_EXPIRED }; // keep the form and its values; the message tells them to log in again
+  }
   const parsed = validateSessionInput(fd);
   if (!parsed.ok) return { error: parsed.error };
   const v = parsed.value;

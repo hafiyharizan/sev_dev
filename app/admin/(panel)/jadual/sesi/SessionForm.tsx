@@ -1,5 +1,7 @@
 'use client';
 
+import CreatedNotice from '@/app/components/admin/CreatedNotice';
+import Rounds from '@/app/components/admin/Rounds';
 import { useState } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
 import TimingFields from '@/app/components/admin/TimingFields';
@@ -18,12 +20,18 @@ function Save({ editing }: { editing: boolean }) {
   );
 }
 
-export default function SessionForm({
-  session, types, speakers, defaultDate,
-}: { session: SessionEditRow | null; types: ProgramType[]; speakers: Speaker[]; defaultDate: string }) {
+function SessionFormInner({
+  session, types, speakers, defaultDate, again,
+}: { again: () => void; session: SessionEditRow | null; types: ProgramType[]; speakers: Speaker[]; defaultDate: string }) {
   const [state, action] = useFormState<SessionFormState, FormData>(saveSession, {});
   const override = session ? rowToTiming(session) : null;
   const [custom, setCustom] = useState(override !== null);
+
+  if (state.ok && !session) {
+    return (
+      <CreatedNotice message={`Disimpan ✓${state.created && state.created > 1 ? ` (${state.created} sesi)` : ''}`} againLabel="Tambah sesi lain" onAgain={again}></CreatedNotice>
+    );
+  }
 
   return (
     <form action={action} className="max-w-xl space-y-5">
@@ -75,4 +83,8 @@ export default function SessionForm({
       {state.ok ? <p role="status" className="text-sm text-green-700">Disimpan ✓{state.created && state.created > 1 ? ` (${state.created} sesi)` : ''}</p> : null}
     </form>
   );
+}
+
+export default function SessionForm(props: { session: SessionEditRow | null; types: ProgramType[]; speakers: Speaker[]; defaultDate: string }) {
+  return <Rounds>{(again) => <SessionFormInner {...props} again={again} />}</Rounds>;
 }

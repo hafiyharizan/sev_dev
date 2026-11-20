@@ -45,9 +45,9 @@ beforeEach(() => {
 });
 
 describe('saveSession', () => {
-  it('throws UNAUTHORIZED and writes nothing when nobody is logged in', async () => {
+  it('returns a session-expired message (keeping the form) and writes nothing when nobody is logged in', async () => {
     h.requireUser.mockRejectedValue(new Error('UNAUTHORIZED'));
-    await expect(saveSession({}, fd({ date: '2026-11-11', program_type_id: TYPE }))).rejects.toThrow('UNAUTHORIZED');
+    expect(await saveSession({}, fd({ date: '2026-11-11', program_type_id: TYPE }))).toEqual({ error: 'Sesi tamat. Sila log masuk semula.' });
     expect(h.calls).toEqual([]);
   });
 

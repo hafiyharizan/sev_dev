@@ -1,6 +1,7 @@
 'use server';
 
 import { requireUser } from '@/lib/auth';
+import { SESSION_EXPIRED } from '@/lib/auth-messages';
 import { createClient } from '@/lib/supabase/server';
 import { timingColumns, validateProgramType } from '@/lib/schedule';
 import { bustSchedule } from '../bust';
@@ -8,7 +9,11 @@ import { bustSchedule } from '../bust';
 export type TypeFormState = { ok?: boolean; error?: string };
 
 export async function saveProgramType(_prev: TypeFormState, fd: FormData): Promise<TypeFormState> {
-  await requireUser();
+  try {
+    await requireUser();
+  } catch {
+    return { error: SESSION_EXPIRED }; // keep the form and its values; the message tells them to log in again
+  }
   const parsed = validateProgramType(fd);
   if (!parsed.ok) return { error: parsed.error };
   const v = parsed.value;

@@ -12,7 +12,7 @@ function toBlob(canvas: HTMLCanvasElement, type: string, quality: number): Promi
  * Browser only. Resizes to a 1600px longest side and re-encodes (WebP, else JPEG).
  * Re-encoding also strips EXIF/GPS metadata.
  */
-export async function resizeImage(file: File): Promise<Blob> {
+export async function resizeImage(file: File, mime: 'image/webp' | 'image/jpeg' = 'image/webp'): Promise<Blob> {
   const bitmap = await createImageBitmap(file, { imageOrientation: 'from-image' });
   const { width, height } = fitWithin(bitmap.width, bitmap.height);
   const canvas = document.createElement('canvas');
@@ -22,8 +22,10 @@ export async function resizeImage(file: File): Promise<Blob> {
   if (!ctx) throw new Error('RESIZE_FAILED');
   ctx.drawImage(bitmap, 0, 0, width, height);
   bitmap.close();
-  const webp = await toBlob(canvas, 'image/webp', 0.82);
-  if (webp && webp.type === 'image/webp') return webp; // older Safari silently returns PNG
+  if (mime === 'image/webp') {
+    const webp = await toBlob(canvas, 'image/webp', 0.82);
+    if (webp && webp.type === 'image/webp') return webp; // older Safari silently returns PNG
+  }
   const jpeg = await toBlob(canvas, 'image/jpeg', 0.85);
   if (!jpeg) throw new Error('RESIZE_FAILED');
   return jpeg;
@@ -38,4 +40,9 @@ export function extForMime(mime: string): 'webp' | 'jpg' | 'png' | 'pdf' | null 
     case 'application/pdf': return 'pdf';
     default: return null;
   }
+}
+
+/** Speaker photos are drawn onto the poster by Satori, which cannot read WebP, so they are stored as JPEG. */
+export function preferredMime(table: string): 'image/webp' | 'image/jpeg' {
+  return table === 'speakers' ? 'image/jpeg' : 'image/webp';
 }

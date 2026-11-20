@@ -1,5 +1,7 @@
 'use client';
 
+import CreatedNotice from '@/app/components/admin/CreatedNotice';
+import Rounds from '@/app/components/admin/Rounds';
 import { useState } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
 import ImageUpload from '@/app/components/admin/ImageUpload';
@@ -13,9 +15,15 @@ function Save() {
   return <button type="submit" disabled={pending} className="min-h-[44px] rounded-full bg-navyblue px-6 py-3 text-white disabled:opacity-60">{pending ? 'Menyimpan…' : 'Simpan'}</button>;
 }
 
-export default function SpeakerForm({ speaker }: { speaker: Speaker | null }) {
+function SpeakerFormInner({ speaker, again }: { speaker: Speaker | null; again: () => void }) {
   const [state, action] = useFormState<SpeakerFormState, FormData>(saveSpeaker, {});
   const [photo, setPhoto] = useState<string | null>(speaker?.photoPath ?? null);
+  if (state.ok && !speaker) {
+    return (
+      <CreatedNotice message={'Disimpan ✓'} againLabel="Tambah ustaz lain" onAgain={again}></CreatedNotice>
+    );
+  }
+
   return (
     <form action={action} key={speaker?.id ?? 'new'} className="max-w-xl space-y-4 rounded-2xl bg-white p-4">
       <h2 className="text-lg font-semibold">{speaker ? 'Sunting ustaz' : 'Ustaz baharu'}</h2>
@@ -36,4 +44,8 @@ export default function SpeakerForm({ speaker }: { speaker: Speaker | null }) {
       {state.ok ? <p role="status" className="text-sm text-green-700">Disimpan ✓</p> : null}
     </form>
   );
+}
+
+export default function SpeakerForm({ speaker }: { speaker: Speaker | null }) {
+  return <Rounds>{(again) => <SpeakerFormInner speaker={speaker} again={again} />}</Rounds>;
 }

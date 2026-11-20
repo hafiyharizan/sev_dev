@@ -1,5 +1,7 @@
 'use client';
 
+import CreatedNotice from '@/app/components/admin/CreatedNotice';
+import Rounds from '@/app/components/admin/Rounds';
 import { useState } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
 import { m } from 'motion/react';
@@ -20,10 +22,19 @@ function Publish({ editing }: { editing: boolean }) {
 
 const field = 'mt-1 w-full min-h-[44px] rounded-lg border border-linegrey bg-white px-3';
 
-export default function PostForm({ post }: { post: Post | null }) {
+function PostFormInner({ post, again }: { post: Post | null; again: () => void }) {
   const [state, action] = useFormState<PostFormState, FormData>(savePost, {});
   const [imagePath, setImagePath] = useState<string | null>(post?.imagePath ?? null);
   const [title, setTitle] = useState(post?.title ?? '');
+
+  if (state.ok && state.slug && !post) {
+    return (
+      <CreatedNotice message={'Disiarkan ✓'} againLabel="Tambah hebahan lain" onAgain={again}>
+        <p className="break-all text-sm">/hebahan/{state.slug}</p>
+        <ShareButton path={`/hebahan/${state.slug}`} title={title || 'Hebahan SEV'} />
+      </CreatedNotice>
+    );
+  }
 
   return (
     <form action={action} className="max-w-xl space-y-5">
@@ -65,4 +76,8 @@ export default function PostForm({ post }: { post: Post | null }) {
       ) : null}
     </form>
   );
+}
+
+export default function PostForm({ post }: { post: Post | null }) {
+  return <Rounds>{(again) => <PostFormInner post={post} again={again} />}</Rounds>;
 }

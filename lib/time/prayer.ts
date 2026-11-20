@@ -1,5 +1,5 @@
 import { PRAYERS, type DayTimes, type IqamahOffsets, type Prayer } from '@/lib/types';
-import { addMinutes, toMinutes } from './clock';
+import { addDays, addMinutes, toMinutes } from './clock';
 
 export function iqamahTimes(day: DayTimes, offsets: IqamahOffsets): Record<Prayer, string> {
   const out = {} as Record<Prayer, string>;
@@ -26,13 +26,13 @@ export function nextPrayer(today: DayTimes | null, tomorrow: DayTimes | null, no
 }
 
 /**
- * Server pages are cached, so the phone's clock can be past midnight while it still holds yesterday's "today".
- * Re-aligns the two days to the client's current date.
+ * Picks today and tomorrow from the cached days using the phone's own date. The page holds a whole month, so the
+ * widget keeps working for days after it was loaded, even offline.
  */
-export function rolloverDays(
-  today: DayTimes | null, tomorrow: DayTimes | null, clientDate: string,
-): { today: DayTimes | null; tomorrow: DayTimes | null } {
-  if (today && today.date === clientDate) return { today, tomorrow };
-  if (tomorrow && tomorrow.date === clientDate) return { today: tomorrow, tomorrow: null };
-  return { today: null, tomorrow: null };
+export function pickDays(days: DayTimes[], clientDate: string): { today: DayTimes | null; tomorrow: DayTimes | null } {
+  const tomorrowDate = addDays(clientDate, 1);
+  return {
+    today: days.find((d) => d.date === clientDate) ?? null,
+    tomorrow: days.find((d) => d.date === tomorrowDate) ?? null,
+  };
 }

@@ -205,3 +205,8 @@ export function planCopy(
   });
   return { rows, skipped: skipped.map((s) => ({ date: s.date, topic: s.topic })) };
 }
+
+/** Speakers offered in the session form: active ones, plus the session's current speaker even if now inactive (so editing never drops him). */
+export function selectableSpeakers(all: Speaker[], currentId: string | null): Speaker[] {
+  return all.filter((sp) => sp.active || sp.id === currentId);
+}

@@ -1,6 +1,7 @@
 'use server';
 
 import { requireUser } from '@/lib/auth';
+import { SESSION_EXPIRED } from '@/lib/auth-messages';
 import { createClient } from '@/lib/supabase/server';
 import { deleteFile } from '@/lib/storage-server';
 import { validateSpeaker } from '@/lib/schedule';
@@ -9,7 +10,11 @@ import { bustSchedule } from '../bust';
 export type SpeakerFormState = { ok?: boolean; error?: string };
 
 export async function saveSpeaker(_prev: SpeakerFormState, fd: FormData): Promise<SpeakerFormState> {
-  await requireUser();
+  try {
+    await requireUser();
+  } catch {
+    return { error: SESSION_EXPIRED }; // keep the form and its values; the message tells them to log in again
+  }
   const parsed = validateSpeaker(fd);
   if (!parsed.ok) return { error: parsed.error };
   const v = parsed.value;

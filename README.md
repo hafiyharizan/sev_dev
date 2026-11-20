@@ -63,6 +63,7 @@ No project URLs, keys or IDs are hard-coded; everything comes from environment v
 
 ## Before launch checklist
 
+- [ ] **First of all:** in Supabase, Authentication → Providers → Email, "Allow new users to sign up" is OFF. It is ON by default in new projects, and while it is on, anyone holding the public key can sign up and write to the database.
 - [ ] Confirm the donation details printed on the generated poster (`lib/poster/donation.ts`) match the real bank account.
 - [ ] Confirm the JAKIM zone for Elmina (`SGR01` is assumed) in Tetapan, and the iqamah offsets (placeholders: Subuh 15, others 10 minutes).
 - [ ] Ask the AJK to check ustaz names and spellings, and to upload their photos (Admin → Jadual → Ustaz).

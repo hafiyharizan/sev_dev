@@ -2,6 +2,7 @@
 
 import { revalidateTag } from 'next/cache';
 import { requireUser } from '@/lib/auth';
+import { SESSION_EXPIRED } from '@/lib/auth-messages';
 import { createClient } from '@/lib/supabase/server';
 import { deleteFile } from '@/lib/storage-server';
 import { storagePathFromUrl } from '@/lib/storage';
@@ -11,7 +12,11 @@ import { TAGS } from '@/lib/cache-tags';
 export type LinkFormState = { ok?: boolean; error?: string };
 
 export async function saveLink(_prev: LinkFormState, fd: FormData): Promise<LinkFormState> {
-  await requireUser();
+  try {
+    await requireUser();
+  } catch {
+    return { error: SESSION_EXPIRED }; // keep the form and its values; the message tells them to log in again
+  }
   const parsed = validateLink(fd);
   if (!parsed.ok) return { error: parsed.error };
   const v = parsed.value;

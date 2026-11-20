@@ -10,12 +10,10 @@ import { listPosts } from '@/lib/data/posts';
 import { listSessions } from '@/lib/data/schedule';
 import { DEFAULT_OFFSETS, getSettings } from '@/lib/data/settings';
 import { safe } from '@/lib/safe';
-import { todayMY } from '@/lib/time/clock';
+import { addDays, todayMY } from '@/lib/time/clock';
 import type { SessionView } from '@/lib/schedule';
 
 export const dynamic = 'force-dynamic'; // "today" changes; the data reads below are still cached by tag
-
-const addDays = (date: string, n: number) => new Date(new Date(`${date}T00:00:00Z`).getTime() + n * 86_400_000).toISOString().slice(0, 10);
 
 export default async function Home() {
   const today = todayMY();
@@ -33,7 +31,7 @@ export default async function Home() {
     <main>
       <Banner />
       <section className="mx-auto grid max-w-7xl gap-6 px-4 py-10 lg:grid-cols-2 lg:px-8">
-        <PrayerWidget today={day(today)} tomorrow={day(addDays(today, 1))} offsets={settings.iqamahOffsets} />
+        <PrayerWidget days={prayerDays} initialDate={today} offsets={settings.iqamahOffsets} />
         <div className="space-y-4">
           <h2 className="text-2xl font-bold">Malam ini / Hari ini</h2>
           {todays.length === 0 ? <p>Tiada program hari ini.</p> : todays.map((s) => <SessionCard key={s.id} session={s} day={day(today)} />)}

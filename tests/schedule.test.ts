@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import {
-  rowToTiming, validateSessionInput, planNewSessions, planCopy, validateProgramType, validateSpeaker,
+  rowToTiming, validateSessionInput, planNewSessions, planCopy, validateProgramType, validateSpeaker, selectableSpeakers,
 } from '@/lib/schedule';
 
 const fd = (o: Record<string, string>) => {
@@ -136,5 +136,18 @@ describe('validateSpeaker', () => {
       .toEqual({ ok: false, error: 'Gambar tidak sah.' });
     expect(validateSpeaker(fd({ name: 'Imam Sobri', photo_path: 'uploads/speakers/0b8f9d3e-1c2a-4f5b-9a77-123456789abc.webp' })))
       .toMatchObject({ ok: true, value: { name: 'Imam Sobri', active: false } });
+  });
+});
+
+describe('selectableSpeakers', () => {
+  const sp = (id: string, active: boolean) => ({ id, name: id, titleLine: null, photoPath: null, photoUrl: null, active });
+  const all = [sp('a', true), sp('b', false), sp('c', true)];
+
+  it('lists active speakers for a new session', () => {
+    expect(selectableSpeakers(all, null).map((x) => x.id)).toEqual(['a', 'c']);
+  });
+
+  it('keeps the current speaker of an existing session even if now inactive, so editing does not drop him', () => {
+    expect(selectableSpeakers(all, 'b').map((x) => x.id)).toEqual(['a', 'b', 'c']);
   });
 });

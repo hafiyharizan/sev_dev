@@ -1,5 +1,7 @@
 'use client';
 
+import CreatedNotice from '@/app/components/admin/CreatedNotice';
+import Rounds from '@/app/components/admin/Rounds';
 import { useState } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
 import ImageUpload from '@/app/components/admin/ImageUpload';
@@ -14,9 +16,15 @@ function Save() {
   return <button type="submit" disabled={pending} className="min-h-[44px] rounded-full bg-navyblue px-6 py-3 text-white disabled:opacity-60">{pending ? 'Menyimpan…' : 'Simpan'}</button>;
 }
 
-export default function LinkForm({ link }: { link: SiteLink | null }) {
+function LinkFormInner({ link, again }: { link: SiteLink | null; again: () => void }) {
   const [state, action] = useFormState<LinkFormState, FormData>(saveLink, {});
   const [url, setUrl] = useState(link?.url ?? '');
+  if (state.ok && !link) {
+    return (
+      <CreatedNotice message={'Disimpan ✓'} againLabel="Tambah pautan lain" onAgain={again}></CreatedNotice>
+    );
+  }
+
   return (
     <form action={action} key={link?.id ?? 'new'} className="max-w-xl space-y-4 rounded-2xl bg-white p-4">
       <h2 className="text-lg font-semibold">{link ? 'Sunting pautan' : 'Pautan baharu'}</h2>
@@ -42,4 +50,8 @@ export default function LinkForm({ link }: { link: SiteLink | null }) {
       {state.ok ? <p role="status" className="text-sm text-green-700">Disimpan ✓</p> : null}
     </form>
   );
+}
+
+export default function LinkForm({ link }: { link: SiteLink | null }) {
+  return <Rounds>{(again) => <LinkFormInner link={link} again={again} />}</Rounds>;
 }

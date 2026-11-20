@@ -2,13 +2,11 @@ import PrayerWidget from '@/app/components/PrayerWidget';
 import { getPrayerDays } from '@/lib/data/prayer';
 import { getSettings } from '@/lib/data/settings';
 import { DEFAULT_OFFSETS } from '@/lib/data/settings';
-import { formatTimeMY, todayMY } from '@/lib/time/clock';
+import { addDays, formatTimeMY, todayMY } from '@/lib/time/clock';
 import { safe } from '@/lib/safe';
 
 export const metadata = { title: 'Waktu Solat · Surau Elmina Valley' };
 export const dynamic = 'force-dynamic';
-
-const addDays = (date: string, n: number) => new Date(new Date(`${date}T00:00:00Z`).getTime() + n * 86_400_000).toISOString().slice(0, 10);
 
 export default async function WaktuSolat() {
   const today = todayMY();
@@ -18,12 +16,11 @@ export default async function WaktuSolat() {
     safe(getPrayerDays(monthStart, addDays(monthEnd, 1)), []),
     safe(getSettings(), { prayerZone: 'SGR01', iqamahOffsets: DEFAULT_OFFSETS }),
   ]);
-  const day = (d: string) => days.find((x) => x.date === d) ?? null;
 
   return (
     <main className="mx-auto max-w-3xl space-y-8 px-4 py-10 lg:px-8">
       <h1 className="text-4xl font-bold">Waktu Solat</h1>
-      <PrayerWidget today={day(today)} tomorrow={day(addDays(today, 1))} offsets={settings.iqamahOffsets} />
+      <PrayerWidget days={days} initialDate={today} offsets={settings.iqamahOffsets} />
       {days.length > 0 ? (
         <div className="overflow-x-auto rounded-3xl bg-white p-4">
           <table className="w-full min-w-[480px] text-left text-sm">

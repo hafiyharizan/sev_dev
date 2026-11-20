@@ -38,3 +38,8 @@ export function formatCountdown(minutes: number): string {
   if (h === 0) return `${m} minit`;
   return m === 0 ? `${h} jam` : `${h} jam ${m} minit`;
 }
+
+/** Moves a YYYY-MM-DD date by n days (UTC math on the date string, no timezone surprises). */
+export function addDays(date: string, n: number): string {
+  return new Date(new Date(`${date}T00:00:00Z`).getTime() + n * 86_400_000).toISOString().slice(0, 10);
+}

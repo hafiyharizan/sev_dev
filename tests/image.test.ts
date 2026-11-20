@@ -31,3 +31,16 @@ describe('extForMime', () => {
     expect(extForMime('text/html')).toBeNull();
   });
 });
+
+import { preferredMime } from '@/lib/image/resize';
+
+describe('preferredMime', () => {
+  it('encodes speaker photos as JPEG, because the poster renderer cannot read WebP', () => {
+    expect(preferredMime('speakers')).toBe('image/jpeg');
+  });
+
+  it('encodes everything else as WebP', () => {
+    expect(preferredMime('posts')).toBe('image/webp');
+    expect(preferredMime('links')).toBe('image/webp');
+  });
+});

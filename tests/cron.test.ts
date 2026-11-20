@@ -40,6 +40,13 @@ describe('GET /api/cron/daily', () => {
     expect(fetchJakimMonth).not.toHaveBeenCalled();
   });
 
+  it('rejects everything when CRON_SECRET is not configured (never accept "Bearer undefined")', async () => {
+    delete process.env.CRON_SECRET;
+    expect((await GET(req('Bearer undefined'))).status).toBe(401);
+    expect((await GET(req('Bearer '))).status).toBe(401);
+    expect(fetchJakimMonth).not.toHaveBeenCalled();
+  });
+
   it('syncs this month and next (late December -> January) and busts the cache tag', async () => {
     const res = await GET(req('Bearer s3cret'));
     expect(res.status).toBe(200);

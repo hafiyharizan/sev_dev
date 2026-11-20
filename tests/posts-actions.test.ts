@@ -43,9 +43,9 @@ beforeEach(() => {
 });
 
 describe('savePost', () => {
-  it('throws UNAUTHORIZED and writes nothing when nobody is logged in', async () => {
+  it('returns a session-expired message (keeping the form) and writes nothing when nobody is logged in', async () => {
     h.requireUser.mockRejectedValue(new Error('UNAUTHORIZED'));
-    await expect(savePost({}, fd({ title: 'T', type: 'pengumuman' }))).rejects.toThrow('UNAUTHORIZED');
+    expect(await savePost({}, fd({ title: 'T', type: 'pengumuman' }))).toEqual({ error: 'Sesi tamat. Sila log masuk semula.' });
     expect(h.db.inserted).toBeNull();
   });
 

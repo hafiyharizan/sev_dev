@@ -1,5 +1,7 @@
 'use client';
 
+import CreatedNotice from '@/app/components/admin/CreatedNotice';
+import Rounds from '@/app/components/admin/Rounds';
 import { useFormState, useFormStatus } from 'react-dom';
 import TimingFields from '@/app/components/admin/TimingFields';
 import type { ProgramType } from '@/lib/schedule';
@@ -12,8 +14,14 @@ function Save() {
   return <button type="submit" disabled={pending} className="min-h-[44px] rounded-full bg-navyblue px-6 py-3 text-white disabled:opacity-60">{pending ? 'Menyimpan…' : 'Simpan'}</button>;
 }
 
-export default function TypeForm({ type }: { type: ProgramType | null }) {
+function TypeFormInner({ type, again }: { type: ProgramType | null; again: () => void }) {
   const [state, action] = useFormState<TypeFormState, FormData>(saveProgramType, {});
+  if (state.ok && !type) {
+    return (
+      <CreatedNotice message={'Disimpan ✓'} againLabel="Tambah jenis lain" onAgain={again}></CreatedNotice>
+    );
+  }
+
   return (
     <form action={action} key={type?.id ?? 'new'} className="max-w-xl space-y-4 rounded-2xl bg-white p-4">
       <h2 className="text-lg font-semibold">{type ? 'Sunting jenis program' : 'Jenis program baharu'}</h2>
@@ -33,4 +41,8 @@ export default function TypeForm({ type }: { type: ProgramType | null }) {
       {state.ok ? <p role="status" className="text-sm text-green-700">Disimpan ✓</p> : null}
     </form>
   );
+}
+
+export default function TypeForm({ type }: { type: ProgramType | null }) {
+  return <Rounds>{(again) => <TypeFormInner type={type} again={again} />}</Rounds>;
 }

@@ -10,7 +10,8 @@ export const dynamic = 'force-dynamic';
 
 /** Vercel Cron (once a day): sync prayer times. Also keeps the free Supabase project active. */
 export async function GET(request: Request) {
-  if (request.headers.get('authorization') !== `Bearer ${process.env.CRON_SECRET}`) {
+  const secret = process.env.CRON_SECRET;
+  if (!secret || request.headers.get('authorization') !== `Bearer ${secret}`) {
     return NextResponse.json({ ok: false, error: 'unauthorized' }, { status: 401 });
   }
 

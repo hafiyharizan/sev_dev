@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { createBrowserSupabase } from '@/lib/supabase/browser';
-import { extForMime, resizeImage } from '@/lib/image/resize';
+import { extForMime, preferredMime, resizeImage } from '@/lib/image/resize';
 import { publicUrl } from '@/lib/storage';
 
 const MAX_PDF_BYTES = 10 * 1024 * 1024;
@@ -32,7 +32,7 @@ export default function ImageUpload({
       if (isPdf && accept !== 'image+pdf') throw new Error('type');
       if (isPdf && file.size > MAX_PDF_BYTES) throw new Error('size');
       if (!isPdf && !file.type.startsWith('image/')) throw new Error('type');
-      const blob: Blob = isPdf ? file : await resizeImage(file);
+      const blob: Blob = isPdf ? file : await resizeImage(file, preferredMime(table));
       const ext = extForMime(blob.type);
       if (!ext) throw new Error('type');
       const path = `uploads/${table}/${crypto.randomUUID()}.${ext}`;

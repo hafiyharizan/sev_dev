@@ -44,3 +44,14 @@ describe('formatCountdown', () => {
     expect(formatCountdown(0)).toBe('kurang seminit');
   });
 });
+
+import { addDays } from '@/lib/time/clock';
+
+describe('addDays', () => {
+  it('moves a YYYY-MM-DD date across month and year ends', () => {
+    expect(addDays('2026-11-30', 1)).toBe('2026-12-01');
+    expect(addDays('2026-12-31', 1)).toBe('2027-01-01');
+    expect(addDays('2026-11-20', 31)).toBe('2026-12-21');
+    expect(addDays('2026-03-01', -1)).toBe('2026-02-28');
+  });
+});

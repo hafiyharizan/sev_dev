@@ -2,6 +2,7 @@
 
 import { revalidateTag } from 'next/cache';
 import { requireUser } from '@/lib/auth';
+import { SESSION_EXPIRED } from '@/lib/auth-messages';
 import { createClient } from '@/lib/supabase/server';
 import { deleteFile } from '@/lib/storage-server';
 import { slugify } from '@/lib/slug';
@@ -11,7 +12,11 @@ import { uniqueSlug, validatePostInput } from '@/lib/posts';
 export type PostFormState = { ok?: boolean; slug?: string; error?: string };
 
 export async function savePost(_prev: PostFormState, fd: FormData): Promise<PostFormState> {
-  await requireUser();
+  try {
+    await requireUser();
+  } catch {
+    return { error: SESSION_EXPIRED }; // keep the form and its values; the message tells them to log in again
+  }
   const parsed = validatePostInput(fd);
   if (!parsed.ok) return { error: parsed.error };
   const v = parsed.value;

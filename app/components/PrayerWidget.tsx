@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { m } from 'motion/react';
 import { formatTimeMY, formatCountdown, nowMinutesMY, todayMY } from '@/lib/time/clock';
-import { iqamahTimes, nextPrayer, rolloverDays } from '@/lib/time/prayer';
+import { iqamahTimes, nextPrayer, pickDays } from '@/lib/time/prayer';
 import { PRAYERS, type DayTimes, type IqamahOffsets, type Prayer } from '@/lib/types';
 
 const LABELS: Record<Prayer | 'syuruk', string> = { subuh: 'Subuh', syuruk: 'Syuruk', zohor: 'Zohor', asar: 'Asar', maghrib: 'Maghrib', isyak: 'Isyak' };
@@ -11,8 +11,8 @@ const ROWS = ['subuh', 'syuruk', 'zohor', 'asar', 'maghrib', 'isyak'] as const;
 
 /** Today's times with iqamah beside azan and a live countdown. The countdown starts after mount (the server has no phone clock). */
 export default function PrayerWidget({
-  today, tomorrow, offsets,
-}: { today: DayTimes | null; tomorrow: DayTimes | null; offsets: IqamahOffsets }) {
+  days: allDays, initialDate, offsets,
+}: { days: DayTimes[]; initialDate: string; offsets: IqamahOffsets }) {
   const [now, setNow] = useState<Date | null>(null);
   useEffect(() => {
     setNow(new Date());
@@ -20,7 +20,7 @@ export default function PrayerWidget({
     return () => clearInterval(id);
   }, []);
 
-  const days = now ? rolloverDays(today, tomorrow, todayMY(now)) : { today, tomorrow };
+  const days = pickDays(allDays, now ? todayMY(now) : initialDate);
   if (!days.today) {
     return <section className="rounded-3xl bg-white p-6">Waktu solat belum tersedia.</section>;
   }

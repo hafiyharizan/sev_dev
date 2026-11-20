@@ -37,22 +37,25 @@ describe('nextPrayer', () => {
   });
 });
 
-import { rolloverDays } from '@/lib/time/prayer';
+import { pickDays } from '@/lib/time/prayer';
 
-describe('rolloverDays (the page was loaded before midnight, the phone clock is now past it)', () => {
-  const today = day('2026-11-20');
-  const tomorrow = day('2026-11-21');
+describe('pickDays (the phone clock decides which cached day is today, even offline for days)', () => {
+  const days = ['2026-11-20', '2026-11-21', '2026-11-22', '2026-11-23'].map(day);
 
-  it('keeps the server days while the date still matches', () => {
-    expect(rolloverDays(today, tomorrow, '2026-11-20')).toEqual({ today, tomorrow });
+  it('finds today and tomorrow for the client date', () => {
+    expect(pickDays(days, '2026-11-21')).toEqual({ today: days[1], tomorrow: days[2] });
   });
 
-  it('promotes tomorrow to today after midnight', () => {
-    expect(rolloverDays(today, tomorrow, '2026-11-21')).toEqual({ today: tomorrow, tomorrow: null });
+  it('still works several days after the page was loaded', () => {
+    expect(pickDays(days, '2026-11-23')).toEqual({ today: days[3], tomorrow: null });
   });
 
-  it('gives up cleanly when neither day matches', () => {
-    expect(rolloverDays(today, tomorrow, '2026-11-25')).toEqual({ today: null, tomorrow: null });
-    expect(rolloverDays(null, null, '2026-11-20')).toEqual({ today: null, tomorrow: null });
+  it('has no tomorrow across a month end when the next month is not downloaded', () => {
+    expect(pickDays([day('2026-11-30')], '2026-11-30')).toEqual({ today: day('2026-11-30'), tomorrow: null });
+  });
+
+  it('gives up cleanly when the date is outside the cached range', () => {
+    expect(pickDays(days, '2026-12-25')).toEqual({ today: null, tomorrow: null });
+    expect(pickDays([], '2026-11-20')).toEqual({ today: null, tomorrow: null });
   });
 });
