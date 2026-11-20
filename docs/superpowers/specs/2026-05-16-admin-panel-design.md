@@ -1,7 +1,7 @@
 # Admin Panel Design Spec
 **Date:** 2026-05-16  
 **Project:** Surau Elmina Valley (SEV) — Next.js 14 / TypeScript / TailwindCSS  
-**Status:** Approved (rev 2 — post-review hardening)
+**Status:** Superseded by `2026-11-20-surau-web-app-design.md` (not built)
 
 ---
 
