@@ -1,6 +1,4 @@
 import './globals.css';
-import Navbar from './components/Navbar/index';
-import Footer from './components/Footer/index';
 import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from '@vercel/speed-insights/next';
 
@@ -19,16 +17,14 @@ export default function RootLayout({
   return (
     <html lang="ms">
       <body className="antialiased">
-        <Navbar />
         {children}
-        <Footer />
         {enableVercelInsights ? (
           <>
             <Analytics />
             <SpeedInsights />
           </>
         ) : null}
-        </body>
+      </body>
     </html>
   )
 }

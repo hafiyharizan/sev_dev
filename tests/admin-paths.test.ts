@@ -15,3 +15,19 @@ describe('isPublicAdminPath', () => {
     expect(isPublicAdminPath('/admin/tetapan/jemputan')).toBe(false);
   });
 });
+
+import { safeAdminRedirect } from '@/lib/admin-paths';
+
+describe('safeAdminRedirect', () => {
+  it('keeps in-admin paths (with query)', () => {
+    expect(safeAdminRedirect('/admin/hebahan')).toBe('/admin/hebahan');
+    expect(safeAdminRedirect('/admin/jadual?bulan=2026-11')).toBe('/admin/jadual?bulan=2026-11');
+    expect(safeAdminRedirect('/admin')).toBe('/admin');
+  });
+
+  it('falls back to /admin for anything that could leave the site or the admin area', () => {
+    for (const bad of ['//evil.com', 'https://evil.com', '/\evil.com', '/administrator', '/hebahan', '', null, undefined]) {
+      expect(safeAdminRedirect(bad as string | null | undefined)).toBe('/admin');
+    }
+  });
+});
