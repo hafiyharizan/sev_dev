@@ -15,3 +15,19 @@ describe('fitWithin', () => {
     expect(fitWithin(1000, 333, 500)).toEqual({ width: 500, height: 167 });
   });
 });
+
+import { extForMime } from '@/lib/image/resize';
+
+describe('extForMime', () => {
+  it('maps allowed upload types to file extensions', () => {
+    expect(extForMime('image/webp')).toBe('webp');
+    expect(extForMime('image/jpeg')).toBe('jpg');
+    expect(extForMime('image/png')).toBe('png');
+    expect(extForMime('application/pdf')).toBe('pdf');
+  });
+
+  it('returns null for anything else', () => {
+    expect(extForMime('image/gif')).toBeNull();
+    expect(extForMime('text/html')).toBeNull();
+  });
+});

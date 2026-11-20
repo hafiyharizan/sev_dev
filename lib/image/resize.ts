@@ -28,3 +28,14 @@ export async function resizeImage(file: File): Promise<Blob> {
   if (!jpeg) throw new Error('RESIZE_FAILED');
   return jpeg;
 }
+
+/** File extension for an allowed upload type, or null if the type is not allowed. */
+export function extForMime(mime: string): 'webp' | 'jpg' | 'png' | 'pdf' | null {
+  switch (mime) {
+    case 'image/webp': return 'webp';
+    case 'image/jpeg': return 'jpg';
+    case 'image/png': return 'png';
+    case 'application/pdf': return 'pdf';
+    default: return null;
+  }
+}

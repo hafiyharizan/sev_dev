@@ -1,30 +1,19 @@
-import React from 'react';
-import Image from "next/image";
+import { redirect } from 'next/navigation';
+import { getPostBySlug } from '@/lib/data/posts';
+import SiakStatic from './SiakStatic';
 
-const JobVacancyAnnouncement: React.FC = () => {
-    return (
-        <main className='mx-auto max-w-4xl my-10 sm:pb-10 px-6 lg:px-8 text-lg leading-8 text-darkpurple'>
-            <p className="text-center text-2xl">بِسْــــــــــــــــــمِ اﷲِالرَّحْمَنِ اارَّحِيم</p>
-            <br />
-            <p className="text-center">السَّلاَمُ عَلَيْكُمْ وَرَحْمَةُ اللهِ وَبَرَكَاتُهُ</p>
-            <br />
-            <p>Kami dengan sukacitanya ingin memaklumkan bahawa Surau Elmina Valley kini membuka peluang untuk mengisi kekosongan jawatan sebagai SIAK (Sistem Informasi & Aktiviti Keagamaan).</p>
-            <br />
-            <Image 
-                src="/images/siak.jpg" 
-                alt="Poster kekosongan jawatan SIAK Surau Elmina Valley" 
-                width={600} 
-                height={600} 
-                className="rounded-3xl mx-auto w-full max-w-2xl h-auto"
-            />
+export const dynamic = 'force-dynamic';
 
-            <p className="mt-8">Sekian, terima kasih.</p>
-            <br />
+const SIAK_POST = 'kekosongan-jawatan-siak';
 
-            <p>Jawatankuasa PROTEM <br/>
-            Surau Elmina Valley</p>
-        </main>
-    );
+/** Old WhatsApp-shared link. Redirects to the post once it exists; otherwise keeps showing the original page. */
+export default async function SiakPage() {
+  let exists = false;
+  try {
+    exists = (await getPostBySlug(SIAK_POST)) !== null;
+  } catch {
+    exists = false; // database unreachable or not configured: never break the old link
+  }
+  if (exists) redirect(`/hebahan/${SIAK_POST}`);
+  return <SiakStatic />;
 }
-
-export default JobVacancyAnnouncement;
